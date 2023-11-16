@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)file:///C:/Users/Polin/Downloads/base.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    </head><body>{% block title -%}
+    <title>{{ title }}</title>
+    {% endblock %}
+
+
+    {% block content -%}
+        {% block mainm -%}
+        <u1>
+            {% for i in menu -%}
+            <li>{{i}}</li>
+            {% endfor %}
+        </u1>
+        {% endblock %}
+    <h1>{{ text }}</h1>
+    {% if content -%}
+        <h1>{{ content }}</h1>
+    {% else %}
+        <h1>There's nothing</h1>
+    {% endif %}
+    {% endblock %}
+
+</body></html>
