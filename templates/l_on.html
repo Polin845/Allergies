@@ -6,11 +6,18 @@
 <div class="flash {{cat}}">{{msg}}</div>
 {% endfor %}
 <form action="" method="post" class="form-contact">
-<p><label>Login: </label> <input type="text" name="login" value="" requied />
-<p><label>Email: </label> <input type="text" name="email" value="" requied />
-<p><label>Pasword: </label> <input type="text" name="psw1" value="" requied />
-<p><label>Repeat_pasword: </label> <input type="text" name="psw2" value="" requied />
-<p><label>Allergies: </label> <input type="text" name="all" value="" requied />
-<p><input type="submit" value="Регистрация" />
+<p><input type="text" name="login" value="" requied placeholder="Логин"/>
+<p><input type="text" name="email" value="" requied placeholder="Email"/>
+<p><input type="pasword" name="psw1" value="" requied placeholder="Пароль"/>
+<p><input type="pasword" name="psw2" value="" requied placeholder="Повторите пароль"/>
+<p><input type="text" name="all" value="" requied placeholder="Аллергены"/>
+<p></p><input type="file" value="" required/>
+<p><input type="submit" name="image" value="Регистрация" />
 </form>
+{% if result %}
+<u1>
+    {% for k in result %}
+    <l1>{{k}}</l1>
+</u1>
+{% endif %}
 {% endblock %}
