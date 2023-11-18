@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from data.base import Log
-from forms.register import LoginForm
+from photo import found
 from flask_login import LoginManager, login_user
 import os
 
@@ -16,16 +16,18 @@ def ajr():
 
 @app.route('/registration', methods=["POST", "GET"])
 def register():
-    form = LoginForm()
-    if request.method == 'POST':
+   if request.method == 'POST':
+        a, image = request.form['all'], request.form['image']
+        if a != '':
+            f = found(image, a)
+            if f != []:
+                return render_template("l_on.html", result=f)
+        Log(log=request.form['login'], em=request.form['email'],
+            pas=request.form['psw1'], al=a)
+        return render_template("l_on.html", title="Авторизация")
+   else:
+        return render_template('l_on.html')
 
-        try:
-            Log(request.form['login'], request.form['email'],
-                request.form['psw1'], request.form['all'])
-        except:
-            Log(error=1)
-    return render_template("l_on.html", title="Авторизация", form=form, error=0)
 
 if __name__ == '__main__':
     app.run(debug=True)
-
