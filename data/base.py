@@ -16,9 +16,8 @@ class Base(DeclarativeBase): pass
 class Person(Base):
     __tablename__ = "Allergies"
 
-    id = Column(Integer, primary_key=True, index=True)
+    login = Column(String, primary_key=True, index=True)
     email = Column(String)
-    login = Column(String)
     pasword = Column(String)
     allerg = Column(String)
 
@@ -27,8 +26,10 @@ class Person(Base):
 Base.metadata.create_all(bind=engine)
 
 # создаем сессию подключения к бд
-def Log(em, log, pas, al):
+def Log(log, em, pas, al, error=0):
     with Session(autoflush=False, bind=engine) as db:
+        if error:  #проверяем ошибки
+            db.rollback()
         # создаем объект Person для добавления в бд
         person = Person(email=em, login=log, pasword=pas, allergens=al)
         db.add(person)  # добавляем в бд
