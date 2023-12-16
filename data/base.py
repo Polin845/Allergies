@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import Column, Integer, String
 
 # строка подключения
-sqlite_database = "sqlite:///metanit.db"
+sqlite_database = "sqlite:///meta.db"
 # создаем движок SqlAlchemy
 engine = create_engine(sqlite_database, echo=True)
 
@@ -26,11 +26,21 @@ class Person(Base):
 Base.metadata.create_all(bind=engine)
 
 # создаем сессию подключения к бд
-def Log(log, em, pas, al, error=0):
+def Per(log, pas, func, em='', al=''):
     with Session(autoflush=False, bind=engine) as db:
-        if error:  #проверяем ошибки
-            db.rollback()
-        # создаем объект Person для добавления в бд
-        person = Person(email=em, login=log, pasword=pas, allergens=al)
-        db.add(person)  # добавляем в бд
-        db.commit()  # сохраняем изменения
+        if func == 'creat':
+            # создаем объект Person для добавления в бд
+            person = Person(email=em, login=log, pasword=pas, allerg='')
+            db.add(person)  # добавляем в бд
+            db.commit()  # сохраняем изменения
+        elif func == 'check':
+            x = db.query(Person).get(log)
+            if x.pasword == pas:
+                return True
+            return False
+        elif func == 'change':
+            x = db.query(Person).filter(Person.login == log).first()
+            x.allerg=al
+            db.commit()
+        elif func == 'ret':
+            return db.query(Person).get(log).allerg

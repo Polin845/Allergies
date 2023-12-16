@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="log_in">
+        <button class="button">Войти</button></form>
+<form action="registration">
+    <button class="button">Зарегистрироваться</button></form>
+
+<form action="" method="post" class="form-contact" enctype="multipart/form-data">
+<p><input type="text" name="all" value="" placeholder="Аллергены"/>
+<p></p><input type=file name="file" value="" required/>
+<p><input type="submit" value="Проверить" />
+</form>
+
+{% if result %}
+<lable>Найденные аллергены: </lable>
+<u1>
+    {% for k in result %}
+    <l>{{k}}</l>
+    {% endfor %}
+</u1>
+{% else %}
+<lable>Всё хорошо </lable>
+{% endif %}
+{% endblock %}
