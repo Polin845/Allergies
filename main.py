@@ -5,6 +5,7 @@ from Forms.log_in import LoginForm
 from Forms.register import RegisterForm
 from Forms.index import AllergensForm
 from flask_login import login_user, LoginManager
+from photo import found
 import os
 
 SECRET_KEY = os.urandom(32)
@@ -35,7 +36,7 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
-        return redirect(f'/main/{user.id}')
+        return redirect('/')
     return render_template('registration.html', title='Регистрация', form=form)
 
 
@@ -57,15 +58,22 @@ def main(id):
     form = AllergensForm()
     db_sess = dase.create_session()
     user = db_sess.query(User).filter(User.id == id).first()
-    if request.values['submit']:
-        if not user:
-            abort(401)
-        if session['_user_id'] != str(user.id):
-            abort()
-        if request.method == 'POST':
+    if not user:
+        abort(401)
+    if session['_user_id'] != str(user.id):
+        abort()
+    if request.method == 'POST':
+        if request.values['submit'] == 'Изменить':
             user.allergens = form.allergs.data
             db_sess.merge(user)
             db_sess.commit()
+        elif request.values['submit'] == 'Проверить':
+            al = user.allergens.data
+            image = request.form['image']
+            flag = found(image, al)
+            if flag != []:
+                return redirect(f'/main/{user.id}', flag)
+            return redirect(f'/main/{user.id}', ok='Всё хорошо')
     return render_template('main.html', form=form, alergs=user.allergens)
 
 
