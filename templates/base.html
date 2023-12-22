@@ -10,6 +10,16 @@
 
 
     {% block content -%}
+
+    {% if current_user.is_authenticated %}
+        <a class="navbar-brand" href="/logout">{{ current_user.name }}</a>
+        <a href="news" class="btn btn-secondary">???????? ????????</a>
+    {% else %}
+        <p>
+            <a class="btn btn-primary " href="/register">????????????????
+            <a class="btn btn-success" href="/login">?????</a></p>
+    {% endif %}
+
     <h1>{{ text }}</h1>
     {% if content -%}
         <h1>{{ content }}</h1>

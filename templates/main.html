@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="lobby">
+<form action="registration">
         <button class="button">Выход</button>
 </form>
 
 <form action="" method="post" class="form-contact">
-    <p><input type="text" name="all" value={{ allergs }}/>
-    <p><input type="submit" value="Изменить" />
+    <p>
+            <label for="allergs">Аллергены</label><br>
+            <input class="form-control" id="allergs" name="allergs" required type="" value="{{alergs}}"><br>
+        </p>
+
+    <p><input class="btn btn-primary" id="submit" name="submit" type="submit" value="Изменить">
 </form>
 
 <form action="" method="post" class="form-contact" enctype="multipart/form-data">
