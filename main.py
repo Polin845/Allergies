@@ -76,7 +76,7 @@ def main(id):
             flag = found(image, al)
             if flag != []:
                 return render_template('main.html', flag=flag, allergs=user.allergens)
-            return render_template('main.html', allergs=user.allergens)
+            return render_template('main.html', allergs=user.allergens, ok='Всё хорошо')
     return render_template('main.html', form=form, alergs=user.allergens)
 
 
