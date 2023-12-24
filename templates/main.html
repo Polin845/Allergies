@@ -1,23 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="register">
-        <button class="button">Выход</button>
-</form>
+<head>
+  <title>Изменение алергенов</title>
+  <link type="text/css" href="{{ url_for('static', filename='style.css')}}" rel="stylesheet" />
+</head>
 
-<form action="" method="post" class="form-contact">
-    <p>
-            <label for="allergs">Аллергены</label><br>
-            <input class="form-control" id="allergs" name="allergs" required type="" value="{{alergs}}"><br>
-    </p>
+<body>
+  <div class="container">
+    <div class="allergens">
+      <form action="register">
+        <div align="right">
+          <button class="buttons">Выход</button>
+        </div>
+      </form>
 
-    <p><input class="btn btn-primary" name="change" type="submit" value="Изменить">
-</form>
+      <form action="" method="post" class="form-contact">
+        <p>
+          <label for="allergs"><b>Аллергены</b></label><br>
+          <input class="form-control" id="allergs" name="allergs" required type="" value="{{alergs}}"><br>
+        </p>
+        <br>
 
-<form action="" method="post" class="form-contact" enctype="multipart/form-data">
-  <p></p><input type=file name="file" value="" required/>
-    <p><input class="btn btn-primary" name="change" type="submit" value="Проверить">
-</form>
+        <p><input class="buttons" name="change" type="submit" value="Изменить">
+      </form>
+    </div>
+    <div class="photo">
+      <form action="" method="post" class="form-contact" enctype="multipart/form-data">
+        <p></p><input type=file name="file" value="" required />
+        <p></p>
+        <p><input class="buttons" name="change" type="submit" value="Проверить"></p>
+      </form>
+    </div>
+    <br>
+  </div>
+  </div>
+</body>
 
 {% if flag %}
 <h4>Найдены аллергены</h4>
