@@ -4,6 +4,7 @@ from data.users import User
 from Forms.log_in import LoginForm
 from Forms.register import RegisterForm
 from Forms.index import AllergensForm
+from Forms.Photo import PhotoForm
 from flask_login import login_user, LoginManager
 from photo import found
 import os
@@ -24,7 +25,7 @@ def load_user(user_id):
 
 
 @app.route('/registration', methods=['GET', 'POST'])
-def reqister():
+def register():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -63,17 +64,19 @@ def main(id):
     if session['_user_id'] != str(user.id):
         abort()
     if request.method == 'POST':
-        if request.values['submit'] == 'Изменить':
+        if request.values['change'] == 'Изменить':
             user.allergens = form.allergs.data
             db_sess.merge(user)
             db_sess.commit()
-        elif request.values['submit'] == 'Проверить':
-            al = user.allergens.data
-            image = request.form['image']
+            print(request.form)
+        else:
+            form = PhotoForm()
+            al = user.allergens
+            image = form.file.data
             flag = found(image, al)
             if flag != []:
-                return redirect(f'/main/{user.id}', flag)
-            return redirect(f'/main/{user.id}', ok='Всё хорошо')
+                return render_template('main.html', flag=flag, allergs=user.allergens)
+            return render_template('main.html', allergs=user.allergens)
     return render_template('main.html', form=form, alergs=user.allergens)
 
 
